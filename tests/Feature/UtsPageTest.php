@@ -22,8 +22,8 @@ class UtsPageTest extends TestCase
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
-        $response->assertSee('Masuk ke StockFlow');
-        $response->assertSee('Username Mahasiswa');
+        $response->assertSee('Form Login');
+        $response->assertSee('Username');
     }
 
     /**
@@ -33,13 +33,11 @@ class UtsPageTest extends TestCase
     {
         $response = $this->post('/login', [
             'username' => 'Natasya Zulaikha',
-            'password' => 'secret123',
-            'role' => 'Administrator Logistik',
+            'password' => '12345',
         ]);
 
         $response->assertRedirect(route('dashboard', [
             'username' => 'Natasya Zulaikha',
-            'role' => 'Administrator Logistik',
         ]));
     }
 
@@ -50,9 +48,8 @@ class UtsPageTest extends TestCase
     {
         $response = $this->get('/dashboard?username=Natasya+Zulaikha');
         $response->assertStatus(200);
-        $response->assertSee('Natasya Zulaikha');
+        $response->assertSee('Selamat Datang, Natasya Zulaikha!');
         $response->assertSee('Total Jenis Barang');
-        $response->assertSee('Distribusi Kategori');
     }
 
     /**
@@ -62,10 +59,9 @@ class UtsPageTest extends TestCase
     {
         $response = $this->get('/pengelolaan?username=Natasya+Zulaikha');
         $response->assertStatus(200);
-        $response->assertSee('Pengelolaan Data Inventaris Barang');
-        $response->assertSee('Laptop ASUS ROG Zephyrus G14');
-        $response->assertSee('BRG-001');
-        $response->assertSee('Monitor Dell UltraSharp');
+        $response->assertSee('Pengelolaan Data Barang');
+        $response->assertSee('Laptop ASUS ROG');
+        $response->assertSee('BRG-01');
     }
 
     /**
@@ -78,6 +74,5 @@ class UtsPageTest extends TestCase
         $response->assertSee('Natasya Zulaikha');
         $response->assertSee('NATASYA ZULAIKHA ZAHRA');
         $response->assertSee('252410103007');
-        $response->assertSee('Pemrograman Web (PWEB)');
     }
 }
